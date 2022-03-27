@@ -1,5 +1,6 @@
 import random
 import turtle as trtl
+import time
 
 screen = trtl.Screen()
 
@@ -12,6 +13,7 @@ pen.hideturtle()
 pen.speed(0)
 
 on_menu = True
+in_game = False
 
 font = ("MS Sans Serif", 20, "bold")
 
@@ -52,19 +54,23 @@ def create_button(color, text):
     pen.write(text, font=font, align="Center")
 
 def click_button(x, y):
-    global on_menu
+    global on_menu, in_game
 
     # Event for clicking top game button
     if not on_menu:
-        if x > -100 and x < 100:
-            if y > 100 and y < 150:
-                pass
+        if not in_game:
+            if x > -100 and x < 100:
+                if y > 100 and y < 150:
+                    in_game = True
+                    balloon_game()
 
     # Event for clicking middle game button
     if not on_menu:
-        if x > -100 and x < 100:
-            if y > 0 and y < 50:
-                clown_game()
+        if not in_game:
+            if x > -100 and x < 100:
+                if y > 0 and y < 50:
+                    in_game = True
+                    clown_game()
 
     # Return to main menu after clown game button
     if not on_menu:
@@ -92,7 +98,7 @@ def click_button(x, y):
                 pen.setpos(-100, 50)
                 create_button("cyan", "Clown Ball")
                 pen.setpos(-100, -50)
-                create_button("cyan", "Placeholder")
+                create_button("cyan", "Skeeball")
                 on_menu = False
 
     # Event for clicking bottom menu button
@@ -465,6 +471,101 @@ def clown_game():
     instructions.clear()
     instructions.setpos(0, -190)
     instructions.write("Main Menu", font=font, align="Center")
+
+# Ditto/Ethan's game
+
+
+
+def balloon_game():
+    global points
+    pen.clear()
+
+    points = 0
+
+    b1 = trtl.Turtle()
+    b2 = trtl.Turtle()
+    b3 = trtl.Turtle()
+
+    def draw_onclick1(x, y):
+        print ("POP!")
+        b1.hideturtle()
+        global points 
+        points += 1
+    def draw_onclick2(x, y):
+        print ("POP!")
+        b2.hideturtle()
+        global points 
+        points += 1 
+    def draw_onclick3(x, y):
+        print ("POP!")
+        b3.hideturtle()
+        global points 
+        points += 1
+    def end():
+        if (points == 3):
+            print ("You Win! :D")
+        else:
+            print ("Try again :(")
+
+    pen.hideturtle
+
+    randomX = random.randint(-200,200)
+    randomY = random.randint(-200,200)
+
+    randomXX = random.randint(-200,200)
+    randomYY = random.randint(-200,200)
+
+    randomXXX = random.randint(-200,200)
+    randomYYY = random.randint(-200,200)
+
+    screen.tracer(0)
+    pen.penup()
+    pen.goto(-225,-175)
+    pen.pendown()
+    style = ('Courier', 20, 'italic')
+    pen.write("Time:", font = style)
+
+    b1.hideturtle()
+    b1.shape('circle')
+    b1.fillcolor('red')
+    b1.penup()
+    b1.goto(randomX, randomY)
+    b1.onclick(draw_onclick1)
+    b1.showturtle()
+
+    b2.hideturtle()
+    b2.shape('circle')
+    b2.fillcolor('blue')
+    b2.penup()
+    b2.goto(randomXX, randomYY)
+    b2.onclick(draw_onclick2)
+    b2.showturtle()
+
+    b3.hideturtle()
+    b3.shape('circle')
+    b3.fillcolor('blue')
+    b3.penup()
+    b3.goto(randomXXX, randomYYY)
+    b3.onclick(draw_onclick3)
+    b3.showturtle()
+
+    timer_text = trtl.Turtle()
+    timer_text.hideturtle()
+    timer_text.goto(-135,-175)
+    start = time.time()
+
+    while (time.time() - start < 6):
+        pen.hideturtle()
+        timer_text.clear()
+        timer_text.write(int(time.time() - start), font=("Courier", 20,"italic"))
+        end_time = time.time()
+        screen.update()
+
+    b1.hideturtle()
+    b2.hideturtle()
+    b3.hideturtle()
+
+    end()
 
 main_menu()
 
