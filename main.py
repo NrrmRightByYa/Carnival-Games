@@ -81,12 +81,15 @@ def click_button(x, y):
                     instructions.clear()
                     main_menu()
                     on_menu = True
+                    in_game = False
 
     # Event for clicking bottom game button
     if not on_menu:
-        if x > -100 and x < 100:
-            if y > -100 and y < -50:
-                pass
+        if not in_game:
+            if x > -100 and x < 100:
+                if y > -100 and y < -50:
+                    in_game = True
+                    skeeball()
 
     # Event for clicking top menu button
     if on_menu:
@@ -110,6 +113,7 @@ def click_button(x, y):
 
     screen.update()
 
+# NrrmRightByYa/Justin's game
 def draw_clown(size, mode=""):
     pen.setheading(90)
     pen.down()
@@ -473,9 +477,6 @@ def clown_game():
     instructions.write("Main Menu", font=font, align="Center")
 
 # Ditto/Ethan's game
-
-
-
 def balloon_game():
     global points
     pen.clear()
@@ -566,6 +567,171 @@ def balloon_game():
     b3.hideturtle()
 
     end()
+
+# Dyuti's game
+def skeeball():
+    pen.clear()
+
+    ''' TO FINISH:
+
+    on click, randomly generate new circle + pos + destroy after a couple sec
+    each time a circle is created, chances--
+    implement scores based on circle pos + update score
+    add buttons to switch screens
+
+    '''
+
+    score = 0
+    chances = 5
+
+    # bckgrnd
+    #trtl.bgpic('bg2.png')
+    wn = trtl.Screen()
+    wn.title('Game')
+    wn.setup(width=1.0, height=1.0)
+    wn.colormode(255)
+
+    # mousePos = wn.getMouse()
+
+    t = trtl.Turtle()
+    t.speed(0)
+
+
+    # def info_click(x, y):
+    #  print(x, y)
+
+
+    #turtle.onscreenclick(info_click, 1)
+
+
+    # ovals
+    def draw_oval(radius):
+        for i in range(2):
+            t.circle(radius, 90)
+            t.circle(radius / 2, 90)
+
+
+    t.color('white')
+
+    t.penup()
+    t.goto(-220, 0)
+    t.pendown()
+    t.seth(-45)
+    oval_20 = draw_oval(300)
+
+    t.penup()
+    t.goto(-80, 71)
+    t.pendown()
+    t.seth(-53)
+    oval_30 = draw_oval(107)
+
+    t.penup()
+    t.goto(-75, 205)
+    t.pendown()
+    t.seth(-48)
+    oval_40 = draw_oval(95)
+
+    t.penup()
+    t.goto(-61, 330)
+    t.pendown()
+    t.seth(-45)
+    oval_50 = draw_oval(83)
+
+    t.ht()
+
+    # score text box
+    t.seth(0)
+    t.penup()
+    t.goto(-388, 468)
+    t.pendown()
+
+    t.begin_fill()
+    for i in range(2):
+        t.forward(120)
+        t.right(90)
+        t.forward(30)
+        t.right(90)
+    t.end_fill()
+
+    t.penup()
+    t.goto(-378, 440)
+    t.color('black')
+    style = ('Times New Roman', 15)
+    score_text = t.write('Score: ' + (str)(score), font=style)
+
+    # chances text box
+    t.goto(-388, 426)
+
+    t.color('white')
+    t.begin_fill()
+    for i in range(2):
+        t.forward(130)
+        t.right(90)
+        t.forward(30)
+        t.right(90)
+    t.end_fill()
+
+    t.goto(-378, 398)
+    t.color('black')
+    chance_text = t.write('Chances: ' + (str)(chances), font=style)
+
+    # red ball
+
+    c = trtl.Turtle()
+    c.speed(0)
+
+    c.penup()
+    c.goto(10, -457)
+    c.pendown()
+    c.color('red')
+    c.begin_fill()
+    circle = c.circle(20)
+    c.end_fill()
+
+    c.ht()
+
+    # throw button
+    t.goto(-300, -431)
+    t.color('black')
+    t.begin_fill()
+
+    def button():
+        for i in range(2):
+            t.forward(130)
+            t.right(90)
+            t.forward(60)
+            t.right(90)
+        t.end_fill()
+
+    throw_button = button()
+    t.goto(-290, -475)
+    t.color('white')
+    throw_text = t.write('Throw Ball', font=style)
+
+    # throw ball on click
+    def throw_click(x, y): 
+        print(x, y)
+        if x > -300 and x < 170 and y > -491 and y < -430:
+            draw_circle(random.randint(-330, 317), random.randint(-310, 489))
+        
+        
+        
+    # random circle
+    t.color('red')
+    t.begin_fill()
+    def draw_circle(randomX, randomY):
+        t.goto(randomX, randomY)
+        t.pendown()
+        t.circle(20)
+        t.penup()
+        
+    t.end_fill()
+
+
+    trtl.onscreenclick(throw_click)
+    trtl.listen()
+    trtl.done()
+
 
 main_menu()
 
